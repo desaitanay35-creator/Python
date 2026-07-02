@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{%  block content %}
+
+
+
+
+
+
+<!-- {% load static %} -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>This is <b>Home Page</b></h1>
+    <img src="{% static '/images/image.png' %}" alt="" height="400px" width="400px">
+    {% for i in data %}
+        <li>{{i}}</li>
+    {% endfor %}
+</body>
+</html>
+{%  endblock content %}
