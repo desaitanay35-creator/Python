@@ -22,7 +22,7 @@ def api_demo(request):
          return Response(data2.error,status=status.HTTP_400_CREATED)
 
 
-@api_view(['GET'])
+@api_view(['GET','PUT','DELETE','PATCH'])
 def api_detail(request,id):
     try:
         player=Player.objects.get(id=id)
@@ -32,5 +32,20 @@ def api_detail(request,id):
     if request.method=='GET':
         serializer= Playerserializer(player)
         return Response(serializer.data)
+    elif request.method=='PUT':
+        serializer=Playerserializer(player,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+    elif request.method=='DELETE':
+        player.delete()
+        return Response({"message":"Bye Bye"},status=status.HTTP_204_NO_CONTENT)
+    elif request.method=='PATCH':
+        serializer=Playerserializer(player,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
     
