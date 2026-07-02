@@ -1,0 +1,37 @@
+{% extends 'navebar.html' %}
+ {% block title %}
+    <title>Home</title>
+ {% endblock title %}
+ {% block body %}
+
+    <h1>Details</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Test Inings</th>
+            <th>Runs</th>
+            <th>Actions</th>
+        </tr>
+        {% for i in player %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.test_innings}}</td>
+                <td>{{i.runs}}</td>
+                <td>
+                    <a href="{% url 'edit' i.id %}">edit</a>
+                    <a href="{% url 'dlt' i.id %}">delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    <br>
+    <br>
+    <form method="get" >
+        <label >Search Player </label>
+        <input type="search" name="search" id="sr">
+        <input type="submit" value="Submit">
+    </form>
+    
+ {% endblock body %}

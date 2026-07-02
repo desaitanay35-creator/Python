@@ -1,0 +1,31 @@
+{% extends 'navebar.html' %}
+ {% block title %}
+    <title>Home</title>
+ {% endblock title %}
+ {% block body %}
+    <h1>This is home page</h1>
+   
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Runs</th>
+                <th>profile</th>
+                <th>email</th>
+                <th>Bod</th>
+            </tr>
+             {% for i in pla %}
+             <tr>
+
+                <td><a href="{% url 'info1' i.id %}">{{i.id}}</a></td>
+                <td>{{i.name}}</td>
+                <td>{{i.runs}}</td>
+                <td>{{i.profile}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.bod}}</td>
+             </tr>
+             {% endfor %}
+
+        </table>
+    
+ {% endblock body %}

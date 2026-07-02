@@ -1,0 +1,21 @@
+{% extends 'navebar.html'  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block body %}
+        <h1>This is add page</h1>
+        <form method="post">
+            {% csrf_token %}
+            name : <input type="text" name='name'>
+            test_innings : <input type="text" name='test_innings'>
+            runs : <input type="text" name='runs'>
+            <input type="submit" value="Submit">
+        </form>
+    {% endblock body %}
+</body>
+</html>

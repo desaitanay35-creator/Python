@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoltPath AI — Smart EV Charging Network Platform</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    background: #eef4f1;
+    color: #1f2937;
+    line-height: 1.55;
+  }
+  a { color: #0d9488; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #064e3b 0%, #0d9488 50%, #14b8a6 100%);
+    color: #fff;
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '⚡';
+    position: absolute;
+    font-size: 280px;
+    color: rgba(255,255,255,0.06);
+    top: -40px; right: 40px;
+    transform: rotate(15deg);
+  }
+  .hero h1 {
+    font-family: Cambria, Georgia, serif;
+    font-size: 50px;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  .hero .tag {
+    font-size: 18px;
+    margin-top: 10px;
+    opacity: 0.92;
+    font-style: italic;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+  .hero .author {
+    margin-top: 24px;
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 2px;
+    position: relative;
+  }
+  .nav-pills {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-top: 22px;
+    justify-content: center;
+    position: relative;
+  }
+  .nav-pills a {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: all 0.15s;
+  }
+  .nav-pills a:hover {
+    background: #fff;
+    color: #064e3b;
+    text-decoration: none;
+  }
+
+  /* SHELL */
+  .wrap {
+    max-width: 1400px;
+    margin: -28px auto 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    padding: 40px 48px;
+    position: relative;
+  }
+  h2 {
+    color: #064e3b;
+    font-size: 26px;
+    margin: 36px 0 10px;
+    font-family: Cambria, Georgia, serif;
+    padding-left: 14px;
+    border-left: 5px solid #0d9488;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    color: #0d9488;
+    font-size: 19px;
+    margin: 22px 0 8px;
+    font-family: Cambria, Georgia, serif;
+  }
+  p { margin: 8px 0 14px; font-size: 15px; }
+  ul, ol { margin: 8px 0 14px 24px; }
+  li { margin: 4px 0; font-size: 14px; }
+
+  /* USER PERSONA CARDS */
+  .users {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .user-card {
+    background: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 8px;
+    padding: 16px;
+    transition: all 0.15s;
+  }
+  .user-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+  .user-card .icon {
+    font-size: 32px;
+    margin-bottom: 6px;
+  }
+  .user-card .title { color: #064e3b; font-weight: 700; font-size: 16px; }
+  .user-card .desc { color: #555; font-size: 13px; margin-top: 4px; }
+
+  /* FEATURE GRID */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .feat {
+    background: #fafbfd;
+    border: 1px solid #d8dee6;
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: all 0.15s;
+  }
+  .feat:hover { border-color: #0d9488; transform: translateY(-2px); }
+  .feat .num {
+    display: inline-block;
+    background: #0d9488;
+    color: #fff;
+    width: 28px; height: 28px; line-height: 28px;
+    border-radius: 50%;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 8px;
+    font-size: 13px;
+  }
+  .feat .title { color: #064e3b; font-weight: 700; font-size: 14px; display: inline; }
+  .feat .desc  { color: #555; font-size: 13px; margin-top: 6px; }
+
+  /* TIER CARDS */
+  .tier-tag {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 8px;
+    border: 1px solid #fbbf24;
+    letter-spacing: 1px;
+  }
+  .tier-tag.t2 { background: #ede9fe; color: #5b21b6; border-color: #a78bfa; }
+
+  /* AI / ML PANEL */
+  .ml-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .ml {
+    background: linear-gradient(180deg, #064e3b 0%, #0d9488 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .ml .h { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .ml .d { font-size: 12px; opacity: 0.92; }
+
+  /* ARCHITECTURE TIERS */
+  .arch { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+  .tier {
+    background: linear-gradient(180deg, #f0fdfa 0%, #ecfeff 100%);
+    border: 1px solid #99f6e4;
+    border-radius: 10px;
+    padding: 18px 20px;
+    position: relative;
+  }
+  .tier-label {
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background: #064e3b;
+    color: #fff;
+    padding: 2px 12px;
+    font-size: 11px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+  .tier h4 {
+    color: #064e3b;
+    font-size: 17px;
+    margin: 6px 0 12px;
+    font-family: Cambria, serif;
+  }
+  .box-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .card {
+    flex: 1 1 180px;
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 8px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    transition: all 0.15s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    border-color: #0d9488;
+  }
+  .card.primary { background: #064e3b; color: #fff; border-color: #064e3b; }
+  .card.primary .ct { color: #99f6e4; }
+  .card.accent  { background: #0d9488; color: #fff; border-color: #0d9488; }
+  .card.accent  .ct { color: #ccfbf1; }
+  .card.warn    { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+  .card.warn    .ct { color: #fef3c7; }
+  .card .ch { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .card .ct { color: #555; font-size: 11px; }
+  .arrow {
+    text-align: center;
+    color: #0d9488;
+    font-size: 22px;
+    font-weight: bold;
+    margin: -4px 0;
+  }
+
+  /* DATA SOURCES GRID */
+  .ds-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .ds-card {
+    background: #fafbfd;
+    border: 1px solid #d8dee6;
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .ds-card h4 {
+    color: #064e3b;
+    font-size: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #0d9488;
+  }
+  .ds-card ul { list-style: none; padding: 0; margin: 0; }
+  .ds-card li {
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px dashed #e2e6ec;
+  }
+  .ds-card li:last-child { border-bottom: none; }
+  .ds-card .name { color: #333; font-weight: 600; display: block; margin-bottom: 2px; }
+  .ds-card a { font-family: Consolas, monospace; font-size: 12px; word-break: break-all; }
+  .badge {
+    display: inline-block;
+    background: #d1fae5;
+    color: #065f46;
+    padding: 1px 6px;
+    font-size: 10px;
+    border-radius: 4px;
+    margin-left: 4px;
+    border: 1px solid #6ee7b7;
+  }
+
+  /* OUTCOME / KILLER FEATURE BOX */
+  .killer {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left: 5px solid #f59e0b;
+    border-radius: 6px;
+    padding: 22px 24px;
+    margin-top: 14px;
+  }
+  .killer strong { color: #92400e; }
+
+  .footer {
+    margin: 40px auto 30px;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+  }
+
+  @media (max-width: 700px) {
+    .hero h1 { font-size: 34px; }
+    .wrap { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>⚡ VoltPath AI</h1>
+  <div class="tag">An AI-powered smart EV charging network platform — book a slot, predict wait time, save grid load, drive sustainably. Built for India's EV boom.</div>
+  <div class="nav-pills">
+    <a href="#problem">Problem</a>
+    <a href="#users">Users</a>
+    <a href="#features">Core Features</a>
+    <a href="#new">New Modules</a>
+    <a href="#ml">AI / ML</a>
+    <a href="#arch">Architecture</a>
+    <a href="#data">Data Sources</a>
+  </div>
+  <div class="author">FINAL-YEAR PROJECT  •  PREPARED BY VISHAL ACHARYA</div>
+</div>
+
+<div class="wrap">
+
+  <!-- PROBLEM -->
+  <h2 id="problem">1. Problem Statement</h2>
+  <p>With the rapid growth of electric vehicles, charging stations face <strong>long queues, uneven utilization, congestion, poor demand forecasting, and no centralized monitoring</strong>. Drivers waste hours hunting for free chargers; operators lose revenue from idle equipment; the grid struggles with unpredictable peak loads. VoltPath AI is the intelligent software layer that fixes all four problems at once.</p>
+
+  <!-- USERS -->
+  <h2 id="users">2. Target Users</h2>
+  <div class="users">
+    <div class="user-card">
+      <div class="icon">🚗</div>
+      <div class="title">EV Drivers</div>
+      <div class="desc">Find, book, pay, navigate to chargers from one app.</div>
+    </div>
+    <div class="user-card">
+      <div class="icon">🔌</div>
+      <div class="title">Station Operators</div>
+      <div class="desc">Monitor utilization, revenue, charger health.</div>
+    </div>
+    <div class="user-card">
+      <div class="icon">📊</div>
+      <div class="title">Network Managers</div>
+      <div class="desc">Plan expansion using demand forecasts.</div>
+    </div>
+    <div class="user-card">
+      <div class="icon">🛠️</div>
+      <div class="title">Administrators</div>
+      <div class="desc">Manage users, roles, system health, billing.</div>
+    </div>
+  </div>
+
+  <!-- CORE FEATURES -->
+  <h2 id="features">3. Core Features (from brief)</h2>
+  <div class="features">
+    <div class="feat"><span class="num">1</span><span class="title">Authentication + Roles</span><div class="desc">JWT login, four role tiers, secured API endpoints.</div></div>
+    <div class="feat"><span class="num">2</span><span class="title">Station & Charger Management</span><div class="desc">CRUD for stations, chargers, connector types (CCS2, Type-2, CHAdeMO).</div></div>
+    <div class="feat"><span class="num">3</span><span class="title">Interactive Map</span><div class="desc">Leaflet + OSM showing nearby stations with live availability dots.</div></div>
+    <div class="feat"><span class="num">4</span><span class="title">Slot Booking</span><div class="desc">Reserve a charger window; auto-release after grace period.</div></div>
+    <div class="feat"><span class="num">5</span><span class="title">Queue & Congestion</span><div class="desc">Live queue with ML-flagged congestion zones.</div></div>
+    <div class="feat"><span class="num">6</span><span class="title">Wait-Time Prediction</span><div class="desc">ML model says "expect 14 min" + suggests alternatives.</div></div>
+    <div class="feat"><span class="num">7</span><span class="title">Revenue Analytics</span><div class="desc">Operator dashboard — daily / weekly / station-wise.</div></div>
+    <div class="feat"><span class="num">8</span><span class="title">Alerts & Notifications</span><div class="desc">Push / SMS on charger failure, congestion, slot opening.</div></div>
+  </div>
+
+  <!-- NEW FUNCTIONALITY -->
+  <h2 id="new">4. New Functionality You Can Add</h2>
+  <p>These are the differentiators that lift this from "another booking app" to a portfolio-grade smart-grid platform.</p>
+
+  <h3>Tier 1 — High impact, must-build <span class="tier-tag">PRIORITY</span></h3>
+  <div class="features">
+    <div class="feat"><span class="title">🗺️ Smart Route + Charge Planner</span><div class="desc">"Ahmedabad → Mumbai, 60% battery" — picks the perfect stops along the route with bookings pre-made. OSRM + battery model.</div></div>
+    <div class="feat"><span class="title">⚡ Grid-Aware Charging</span><div class="desc">Live grid frequency from POSOCO; throttle non-priority chargers when grid is stressed. Killer demo.</div></div>
+    <div class="feat"><span class="title">💰 Dynamic Time-of-Use Pricing</span><div class="desc">Peak 6-9 PM costs more, off-peak 2-5 AM gets discount. Shifts demand, eases grid.</div></div>
+    <div class="feat"><span class="title">🔋 Battery-Health-Aware Profile</span><div class="desc">"Slow-charge to 100% overnight" vs "fast-charge to 80% in 30 min" — saves battery + money.</div></div>
+    <div class="feat"><span class="title">🧰 OCPP Predictive Maintenance</span><div class="desc">Charger sends OCPP telemetry → LSTM autoencoder predicts failure 7 days early.</div></div>
+    <div class="feat"><span class="title">📱 Driver Mobile App</span><div class="desc">React Native — push notifications, in-app pay, QR scan, navigation.</div></div>
+    <div class="feat"><span class="title">🌍 Carbon Saved Tracker</span><div class="desc">"You saved 4.2 kg CO₂ vs petrol this trip" — gamification + impact storytelling.</div></div>
+    <div class="feat"><span class="title">🚫 No-Show Penalty</span><div class="desc">Auto-cancel reservation 15 min after missed slot. Solves the ghost-booking problem.</div></div>
+  </div>
+
+  <h3>Tier 2 — Differentiating / publishable <span class="tier-tag t2">ADVANCED</span></h3>
+  <div class="features">
+    <div class="feat"><span class="title">🔄 Vehicle-to-Grid (V2G) Module</span><div class="desc">Parked EVs sell power back during grid peaks. Even a simulation impresses reviewers.</div></div>
+    <div class="feat"><span class="title">🎯 Multi-Objective Slot Allocation</span><div class="desc">Pareto-optimize: minimize wait, minimize grid load, minimize price simultaneously.</div></div>
+    <div class="feat"><span class="title">🤝 Federated Learning</span><div class="desc">Operators improve the demand model without sharing raw customer data. Hot research topic.</div></div>
+    <div class="feat"><span class="title">📈 GNN for Charger Placement</span><div class="desc">Graph Neural Network recommends "where to put the next charger" based on the demand network.</div></div>
+    <div class="feat"><span class="title">💬 NLP on Driver Feedback</span><div class="desc">Sentiment + topic extraction on reviews → fixes the right complaint.</div></div>
+    <div class="feat"><span class="title">🔧 OpenADR Integration</span><div class="desc">Speaks the standard utility demand-response protocol. Industry-credible.</div></div>
+  </div>
+
+  <!-- AI/ML MODULES -->
+  <h2 id="ml">5. AI / ML Modules</h2>
+  <div class="ml-grid">
+    <div class="ml"><div class="h">Demand Forecasting</div><div class="d">XGBoost or LSTM on past sessions + weather + holidays → predict next 24h demand per station.</div></div>
+    <div class="ml"><div class="h">Wait-Time Prediction</div><div class="d">Gradient-boosted regressor — current queue + charger speed + battery target → expected minutes.</div></div>
+    <div class="ml"><div class="h">Congestion Detection</div><div class="d">Threshold + clustering on real-time station load; alerts before queues form.</div></div>
+    <div class="ml"><div class="h">Dynamic Pricing</div><div class="d">Reinforcement learning agent shifts demand to off-peak with reward = grid_balance − revenue_loss.</div></div>
+    <div class="ml"><div class="h">Predictive Maintenance</div><div class="d">LSTM autoencoder on OCPP telemetry → flag chargers about to fail.</div></div>
+    <div class="ml"><div class="h">Smart Routing</div><div class="d">A* + battery model + charger availability → optimal trip plan with stops.</div></div>
+  </div>
+
+  <!-- KILLER FEATURE -->
+  <h2>6. The Killer Feature to Lead With</h2>
+  <div class="killer">
+    <strong>Grid-Aware Smart Charging.</strong> Given live grid frequency from POSOCO + ML demand prediction + active reservations, the system <strong>recommends each charger's power level for the next 15 minutes</strong>. The demo shows a live grid-strain meter and chargers automatically throttling. One feature, three audiences (drivers see no impact, operators see steady revenue, grid sees flat demand). This is what BPCL, Tata Power, and ChargeZone are actually building today.
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <h2 id="arch">7. System Architecture</h2>
+  <p>Classic three-tier with a Python ML side-car and a real-time WebSocket layer. Designed for one-command Docker setup.</p>
+
+  <div class="arch">
+
+    <div class="tier">
+      <span class="tier-label">TIER 1 — USERS</span>
+      <h4>Multi-device clients</h4>
+      <div class="box-row">
+        <div class="card primary"><div class="ch">Driver — Mobile</div><div class="ct">React Native: book, navigate, pay</div></div>
+        <div class="card primary"><div class="ch">Operator — Desktop</div><div class="ct">Analytics dashboard, charger control</div></div>
+        <div class="card primary"><div class="ch">Manager — Desktop</div><div class="ct">Network expansion, forecasting</div></div>
+        <div class="card primary"><div class="ch">Admin — Desktop</div><div class="ct">Users, roles, billing, logs</div></div>
+      </div>
+    </div>
+
+    <div class="arrow">▼ &nbsp;HTTPS / WebSocket&nbsp; ▼</div>
+
+    <div class="tier">
+      <span class="tier-label">TIER 2 — FRONTEND</span>
+      <h4>React 19 + Tailwind CSS + Vite + Leaflet</h4>
+      <div class="box-row">
+        <div class="card"><div class="ch">Interactive Map</div><div class="ct">Leaflet + OSM tiles, live availability</div></div>
+        <div class="card"><div class="ch">Booking UI</div><div class="ct">Slot picker, payment, confirmation</div></div>
+        <div class="card"><div class="ch">Live Queue</div><div class="ct">Socket.io stream</div></div>
+        <div class="card"><div class="ch">Analytics</div><div class="ct">Recharts dashboards</div></div>
+        <div class="card"><div class="ch">Route Planner</div><div class="ct">Multi-stop charging trip</div></div>
+      </div>
+    </div>
+
+    <div class="arrow">▼ &nbsp;REST API + Socket.io&nbsp; ▼</div>
+
+    <div class="tier">
+      <span class="tier-label">TIER 3 — BACKEND API</span>
+      <h4>Node.js + Express.js + Socket.io + JWT</h4>
+      <div class="box-row">
+        <div class="card primary"><div class="ch">/api/auth</div><div class="ct">Login, JWT issue/refresh</div></div>
+        <div class="card primary"><div class="ch">/api/stations</div><div class="ct">CRUD, search, nearby</div></div>
+        <div class="card primary"><div class="ch">/api/bookings</div><div class="ct">Slot reserve, cancel, history</div></div>
+        <div class="card primary"><div class="ch">/api/analytics</div><div class="ct">Revenue, utilization KPIs</div></div>
+        <div class="card primary"><div class="ch">/api/route</div><div class="ct">Smart trip planner</div></div>
+        <div class="card primary"><div class="ch">/api/payments</div><div class="ct">Razorpay / Stripe webhook</div></div>
+      </div>
+    </div>
+
+    <div class="arrow">▼ &nbsp;internal HTTP&nbsp; ▼</div>
+
+    <div class="tier">
+      <span class="tier-label">TIER 4 — ML SIDE-CAR</span>
+      <h4>Python + FastAPI + Scikit-learn + XGBoost / LSTM</h4>
+      <div class="box-row">
+        <div class="card accent"><div class="ch">/predict/demand</div><div class="ct">Next-24h station demand</div></div>
+        <div class="card accent"><div class="ch">/predict/wait</div><div class="ct">Wait-time estimate</div></div>
+        <div class="card accent"><div class="ch">/detect/congestion</div><div class="ct">Real-time anomaly</div></div>
+        <div class="card accent"><div class="ch">/price/dynamic</div><div class="ct">RL pricing agent</div></div>
+        <div class="card accent"><div class="ch">/maintenance/risk</div><div class="ct">Predictive maintenance</div></div>
+      </div>
+    </div>
+
+    <div class="arrow">▼ &nbsp;SQL / Redis pub-sub&nbsp; ▼</div>
+
+    <div class="tier">
+      <span class="tier-label">TIER 5 — DATA & INFRA</span>
+      <h4>PostgreSQL + Redis + InfluxDB</h4>
+      <div class="box-row">
+        <div class="card"><div class="ch">PostgreSQL</div><div class="ct">Users, stations, bookings, payments</div></div>
+        <div class="card"><div class="ch">Redis</div><div class="ct">Live session state, Socket.io broker</div></div>
+        <div class="card"><div class="ch">InfluxDB / Timescale</div><div class="ct">OCPP telemetry time-series</div></div>
+        <div class="card"><div class="ch">Object storage</div><div class="ct">Trained models, station images</div></div>
+      </div>
+    </div>
+
+    <div class="arrow">▲ &nbsp;external integrations&nbsp; ▲</div>
+
+    <div class="tier">
+      <span class="tier-label">EXTERNAL SYSTEMS</span>
+      <h4>Real-world integrations</h4>
+      <div class="box-row">
+        <div class="card warn"><div class="ch">OCPP 1.6 / 2.0</div><div class="ct">Chargers ↔ network</div></div>
+        <div class="card warn"><div class="ch">OCPI 2.2</div><div class="ct">Network ↔ network roaming</div></div>
+        <div class="card warn"><div class="ch">POSOCO API</div><div class="ct">Live grid frequency</div></div>
+        <div class="card warn"><div class="ch">Razorpay / UPI</div><div class="ct">Payments</div></div>
+        <div class="card warn"><div class="ch">OpenRouteService</div><div class="ct">Routing + isochrones</div></div>
+        <div class="card warn"><div class="ch">Open-Meteo</div><div class="ct">Weather (affects EV range)</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DATA SOURCES -->
+  <h2 id="data">8. Data Sources (all free / open)</h2>
+  <p>Pick a single Indian metro for the MVP. Use Open Charge Map + VAHAN + Caltech ACN-Data + POSOCO as the minimum stack.</p>
+
+  <div class="ds-grid">
+
+    <div class="ds-card">
+      <h4>🔌 Charging Station Catalogs</h4>
+      <ul>
+        <li><span class="name">Open Charge Map <span class="badge">recommended</span></span><a href="https://openchargemap.org/site/develop/api" target="_blank">https://openchargemap.org/site/develop/api</a></li>
+        <li><span class="name">PlugShare</span><a href="https://www.plugshare.com/" target="_blank">https://www.plugshare.com/</a></li>
+        <li><span class="name">Tata Power EZ Charge</span><a href="https://www.tatapower.com/ev-charging-stations" target="_blank">https://www.tatapower.com/ev-charging-stations</a></li>
+        <li><span class="name">e-Amrit (NITI Aayog)</span><a href="https://e-amrit.niti.gov.in/" target="_blank">https://e-amrit.niti.gov.in/</a></li>
+        <li><span class="name">OSM amenity=charging_station</span><a href="https://overpass-turbo.eu/" target="_blank">https://overpass-turbo.eu/</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>📈 EV Registration & Adoption (demand forecasting)</h4>
+      <ul>
+        <li><span class="name">VAHAN Dashboard <span class="badge">India</span></span><a href="https://vahan.parivahan.gov.in/vahan4dashboard/" target="_blank">https://vahan.parivahan.gov.in/vahan4dashboard/</a></li>
+        <li><span class="name">NITI Aayog EV stats</span><a href="https://www.niti.gov.in/electric-vehicles" target="_blank">https://www.niti.gov.in/electric-vehicles</a></li>
+        <li><span class="name">Bureau of Energy Efficiency</span><a href="https://beeindia.gov.in/en/programmes/electric-vehicles" target="_blank">https://beeindia.gov.in/en/programmes/electric-vehicles</a></li>
+        <li><span class="name">SMEV</span><a href="https://smev.in/" target="_blank">https://smev.in/</a></li>
+        <li><span class="name">data.gov.in</span><a href="https://data.gov.in/" target="_blank">https://data.gov.in/</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>⚡ Grid Data (grid-aware charging + V2G)</h4>
+      <ul>
+        <li><span class="name">POSOCO / Grid India <span class="badge">key</span></span><a href="https://posoco.in/" target="_blank">https://posoco.in/</a></li>
+        <li><span class="name">NLDC dashboards</span><a href="https://nldc.in/" target="_blank">https://nldc.in/</a></li>
+        <li><span class="name">Central Electricity Authority</span><a href="https://cea.nic.in/dashboard/" target="_blank">https://cea.nic.in/dashboard/</a></li>
+        <li><span class="name">ENTSO-E (Europe — training data)</span><a href="https://transparency.entsoe.eu/" target="_blank">https://transparency.entsoe.eu/</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>🧠 Real Charging Sessions (ML training gold)</h4>
+      <ul>
+        <li><span class="name">ACN-Data (Caltech) <span class="badge">best</span></span><a href="https://ev.caltech.edu/dataset" target="_blank">https://ev.caltech.edu/dataset</a></li>
+        <li><span class="name">NREL AFDC</span><a href="https://afdc.energy.gov/data_download" target="_blank">https://afdc.energy.gov/data_download</a></li>
+        <li><span class="name">Boulder EV Open Data</span><a href="https://open-data.bouldercolorado.gov/" target="_blank">https://open-data.bouldercolorado.gov/</a></li>
+        <li><span class="name">Palo Alto EV Sessions</span><a href="https://data.cityofpaloalto.org/" target="_blank">https://data.cityofpaloalto.org/</a></li>
+        <li><span class="name">OCPP synthetic logs</span><a href="https://github.com/mobilityhouse/ocpp" target="_blank">https://github.com/mobilityhouse/ocpp</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>🗺️ Maps, Routing, Geospatial</h4>
+      <ul>
+        <li><span class="name">OpenStreetMap</span><a href="https://www.openstreetmap.org" target="_blank">https://www.openstreetmap.org</a></li>
+        <li><span class="name">OpenRouteService <span class="badge">routing</span></span><a href="https://openrouteservice.org/" target="_blank">https://openrouteservice.org/</a></li>
+        <li><span class="name">OSRM</span><a href="http://project-osrm.org/" target="_blank">http://project-osrm.org/</a></li>
+        <li><span class="name">MapTiler / Stadia (basemap)</span><a href="https://www.maptiler.com/" target="_blank">https://www.maptiler.com/</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>🌦️ Weather (affects EV range)</h4>
+      <ul>
+        <li><span class="name">Open-Meteo <span class="badge">no key</span></span><a href="https://open-meteo.com/" target="_blank">https://open-meteo.com/</a></li>
+        <li><span class="name">IMD India</span><a href="https://mausam.imd.gov.in/" target="_blank">https://mausam.imd.gov.in/</a></li>
+        <li><span class="name">OpenWeatherMap</span><a href="https://openweathermap.org/" target="_blank">https://openweathermap.org/</a></li>
+        <li><span class="name">NREL Solar Radiation DB</span><a href="https://nsrdb.nrel.gov/" target="_blank">https://nsrdb.nrel.gov/</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>📜 Standards / Protocols</h4>
+      <ul>
+        <li><span class="name">OCPP 1.6 / 2.0.1</span><a href="https://www.openchargealliance.org/protocols/ocpp/" target="_blank">https://www.openchargealliance.org/protocols/ocpp/</a></li>
+        <li><span class="name">OCPI 2.2 (roaming)</span><a href="https://evroaming.org/" target="_blank">https://evroaming.org/</a></li>
+        <li><span class="name">OpenADR 2.0</span><a href="https://www.openadr.org/" target="_blank">https://www.openadr.org/</a></li>
+        <li><span class="name">ISO 15118 (Plug & Charge, V2G)</span><a href="https://www.iso.org/standard/77845.html" target="_blank">https://www.iso.org/standard/77845.html</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>🧪 Synthetic Data Generators</h4>
+      <ul>
+        <li><span class="name">EV-FleetSim</span><a href="https://github.com/jonleathwood/EV-FleetSim" target="_blank">https://github.com/jonleathwood/EV-FleetSim</a></li>
+        <li><span class="name">GridLAB-D</span><a href="https://www.gridlabd.org/" target="_blank">https://www.gridlabd.org/</a></li>
+        <li><span class="name">SUMO (traffic + EV)</span><a href="https://eclipse.dev/sumo/" target="_blank">https://eclipse.dev/sumo/</a></li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <h4>💳 Payments (India)</h4>
+      <ul>
+        <li><span class="name">Razorpay <span class="badge">UPI ready</span></span><a href="https://razorpay.com/docs/" target="_blank">https://razorpay.com/docs/</a></li>
+        <li><span class="name">Cashfree</span><a href="https://www.cashfree.com/docs/" target="_blank">https://www.cashfree.com/docs/</a></li>
+        <li><span class="name">PhonePe Business</span><a href="https://developer.phonepe.com/" target="_blank">https://developer.phonepe.com/</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- EXPECTED OUTCOMES -->
+  <h2>9. Expected Outcomes</h2>
+  <ul>
+    <li>📈 <strong>Higher charger utilization</strong> — typical empty chargers fill via smart routing.</li>
+    <li>⏱️ <strong>Reduced waiting times</strong> — ML predictions + slot booking + alternative suggestions.</li>
+    <li>🗺️ <strong>Better network planning</strong> — operators see demand heat-maps for the next month.</li>
+    <li>⚡ <strong>Lower grid stress</strong> — dynamic pricing + grid-aware throttling shift load to off-peak.</li>
+    <li>💰 <strong>More operator revenue</strong> — utilization up, no-shows down, dynamic pricing earns peak premiums.</li>
+    <li>🌍 <strong>Greener footprint</strong> — drivers see their CO₂ savings; operators see their contribution.</li>
+  </ul>
+
+  <!-- ONE-LINE PITCH -->
+  <h2>10. One-line elevator pitch</h2>
+  <div class="killer">
+    <strong>VoltPath AI is the smart-grid–aware EV charging platform</strong> — drivers book the right charger at the right time, operators get full visibility and revenue, and the grid stays balanced. One platform, four user types, six ML modules, real Indian data.
+  </div>
+
+</div>
+
+<div class="footer">
+  VoltPath AI  •  Prepared by Vishal Acharya  •  Final-Year Project Brief
+</div>
+
+</body>
+</html>
